@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* Dashboard Header Text Fix */
+body.light .header h1,
+body.light .header p,
+body.light .tasks-section h2,
+body.light h1,
+body.light h2,
+body.light h3,
+body.light h4,
+body.light p {
+  color: #1e293b !important;
+}
+
+/* Tasks Section Background */
+body.light .tasks-section {
+  background: #ffffff !important;
+  border-radius: 15px;
+  padding: 25px !important;
+}
+
+/* Empty State Text */
+body.light .empty-state p {
+  color: #64748b !important;
+}
+
+/* Sidebar Links Color Fix */
+body.light .sidebar nav a {
+  color: rgba(255,255,255,0.85) !important;
+}
+
+body.light .sidebar nav a:hover,
+body.light .sidebar nav a.active {
+  color: white !important;
+  background: rgba(255,255,255,0.2) !important;
+}
+
+/* Logout Button */
+body.light .logout-btn {
+  color: white !important;
+  border-color: rgba(255,255,255,0.4) !important;
+}

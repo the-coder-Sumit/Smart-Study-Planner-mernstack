@@ -1,0 +1,201 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  z-index: 9999;
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+}
+
+/* Light Mode Overrides */
+body.light {
+  background: #f1f5f9 !important;
+}
+body.light .sidebar {
+  background: linear-gradient(180deg, #4338ca, #6366f1) !important;
+}
+body.light .main-content,
+body.light .planner-main,
+body.light .analytics-main,
+body.light .settings-main {
+  background: #f1f5f9 !important;
+}
+body.light .dashboard,
+body.light .planner-page,
+body.light .analytics-page,
+body.light .settings-page {
+  background: #f1f5f9 !important;
+}
+body.light .stat-card.blue,
+body.light .stat-card.purple,
+body.light .stat-card.green,
+body.light .stat-card.orange { filter: brightness(1.1); }
+body.light .tasks-section,
+body.light .form-card,
+body.light .task-card,
+body.light .subject-card,
+body.light .chart-card,
+body.light .settings-card {
+  background: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+body.light .task-left h4,
+body.light .section h2,
+body.light .planner-header h1,
+body.light .analytics-main h1,
+body.light .settings-main h1,
+body.light .settings-card h3,
+body.light .form-card h3,
+body.light .chart-card h3 {
+  color: #1e293b !important;
+}
+body.light .task-left p,
+body.light .empty,
+body.light .subtitle,
+body.light .task-count {
+  color: #64748b !important;
+}
+body.light .search-input,
+body.light .filter-select,
+body.light .task-right select {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+body.light .theme-toggle {
+  border-color: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.08);
+  color: #1e293b;
+}
+
+/* Fix form inputs and labels in light mode */
+body.light .form-group label,
+body.light .about-info p,
+body.light .form-group small,
+body.light .generate-section p,
+body.light .note-title,
+body.light .empty-notes p,
+body.light .task-right select option,
+body.light .subject-card span,
+body.light .goal-header h3,
+body.light .goal-text,
+body.light .goal-edit,
+body.light .timer-display,
+body.light .pomodoro-main h1,
+body.light .pomodoro-main h2 {
+  color: #1e293b !important;
+}
+
+/* Fix containers that were black */
+body.light .goal-section,
+body.light .pomodoro-container,
+body.light .timer-box {
+  background: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* Universal Inputs */
+body.light input,
+body.light select,
+body.light textarea {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+body.light select option {
+  background: #ffffff !important;
+  color: #1e293b !important;
+}
+
+/* AI Chat Page */
+body.light .ai-main {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+}
+body.light .chat-message.ai {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+body.light .chat-message.user {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+/* Quiz Viewer */
+body.light .quiz-main {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+}
+body.light .mcq-card,
+body.light .generate-section {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #e2e8f0 !important;
+}
+body.light .mcq-option {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border-color: #e2e8f0 !important;
+}
+body.light .mcq-option:hover { background: #e2e8f0 !important; }
+body.light .mcq-option.selected { border-color: #3b82f6 !important; background: rgba(59, 130, 246, 0.1) !important; }
+body.light .tab-btn {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+body.light .tab-btn.active {
+  background: #3b82f6 !important;
+  color: white !important;
+}
