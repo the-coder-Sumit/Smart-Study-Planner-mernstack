@@ -2,7 +2,7 @@
 
 A comprehensive web-based application designed to help students manage their academic workflow efficiently. Built with the **MERN Stack** (MongoDB, Express, React, Node.js) and integrated with **Google Gemini AI** for an enhanced learning experience.
 
-🌐 **Live Demo:** [https://smart-study-planner.vercel.app/](https://smart-study-planner.vercel.app/)
+🌐 **Live Demo:** [https://smart-study-planner-mernstack.vercel.app/](https://smart-study-planner-mernstack.vercel.app/)
 
 ---
 
