@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import API_URL from '../config';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import './Auth.css';
 
 function Login() {
+  useEffect(() => { googleLogout(); }, []);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); 
@@ -72,7 +73,7 @@ function Login() {
           />
           <input 
             type="password" 
-            placeholder="••••••" 
+            placeholder="â€¢â€¢â€¢â€¢â€¢â€¢" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required 
@@ -108,3 +109,4 @@ function Login() {
 }
 
 export default Login;
+

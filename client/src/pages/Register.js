@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import API_URL from '../config';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import './Auth.css';
 
 // Local SVG Icons matching the design
@@ -12,6 +12,7 @@ const UserIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="non
 const LogoIcon = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>;
 
 function Register() {
+  useEffect(() => { googleLogout(); }, []);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,7 +68,7 @@ function Register() {
         {/* Right Side */}
         <div className="auth-right">
           <div className="auth-header">
-            <h2>Get Started 🚀</h2>
+            <h2>Get Started ðŸš€</h2>
             <p>Create your new account</p>
           </div>
 
