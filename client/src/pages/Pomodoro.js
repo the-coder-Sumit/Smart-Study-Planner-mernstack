@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import API_URL from '../config';
@@ -27,7 +27,8 @@ function Pomodoro() {
   useEffect(() => {
     fetchSubjects();
     fetchTodayStats();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
 
   const fetchSubjects = async () => {
     try {
@@ -92,7 +93,8 @@ function Pomodoro() {
       }, 1000);
     }
     return () => clearInterval(intervalRef.current);
-  }, [isRunning, mode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
 
   const playAlertSound = () => {
     try {

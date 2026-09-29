@@ -15,7 +15,8 @@ function Leaderboard() {
       return;
     }
     fetchLeaderboard();
-  }, [navigate, token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
 
   const fetchLeaderboard = async () => {
     try {

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import API_URL from '../config';
@@ -24,7 +24,8 @@ function Notes() {
       return;
     }
     fetchSubjects();
-  }, [navigate, token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
 
   useEffect(() => {
     if (selectedSubject) {
@@ -32,7 +33,8 @@ function Notes() {
     } else {
       setNotes([]);
     }
-  }, [selectedSubject]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
 
   const fetchSubjects = async () => {
     try {
