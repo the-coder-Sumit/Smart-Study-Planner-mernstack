@@ -1,6 +1,10 @@
-﻿# Smart Study Planner & Focus Tracker 🚀
+# Smart Study Planner & Focus Tracker 🚀
 
 A comprehensive web-based application designed to help students manage their academic workflow efficiently. Built with the **MERN Stack** (MongoDB, Express, React, Node.js) and integrated with **Google Gemini AI** for an enhanced learning experience.
+
+🌐 **Live Demo:** [https://smart-study-planner.vercel.app/](https://smart-study-planner.vercel.app/)
+
+---
 
 ## ✨ Key Features
 
@@ -19,36 +23,43 @@ A comprehensive web-based application designed to help students manage their aca
 - **Authentication:** JWT, Google OAuth 2.0
 - **AI Integration:** Google Gemini API
 
-## 🚀 Getting Started
+---
 
-To run this project locally, follow these steps:
+## 🚀 Getting Started (Run Locally)
 
-### 1. Clone the repository
-\\\ash
+To run this project locally on your machine, follow these steps:
+
+### 1. Clone the Repository
+```bash
 git clone https://github.com/the-coder-Sumit/Smart-Study-Planner-mernstack.git
 cd Smart-Study-Planner-mernstack
-\\\
+```
 
-### 2. Environment Variables
-Create a \.env\ file in both the \client\ and \server\ directories. Refer to the \.env.example\ files in each directory for the required API keys and database URIs.
+### 2. Set Up Environment Variables
+You need to create a `.env` file in both the `client` and `server` directories. 
+Refer to the `.env.example` files in each directory for the required API keys (Google Gemini, Google Auth Client ID) and your MongoDB URI.
 
 ### 3. Install Dependencies & Run
 
-**For Backend (Server):**
-\\\ash
+**Step A: Start the Backend Server**
+Open a terminal and run:
+```bash
 cd server
 npm install
 npm start
-\\\
+```
+*The server will start running on http://localhost:5000*
 
-**For Frontend (Client):**
-\\\ash
+**Step B: Start the Frontend React App**
+Open a new, separate terminal and run:
+```bash
 cd client
 npm install
 npm start
-\\\
+```
+*The React app will open in your browser at http://localhost:3000*
 
-The application will be running at \http://localhost:3000\.
+---
 
 ## 👨‍💻 Developer
-Developed by Sumit Kumar.
+Developed by **Sumit Kumar**.
