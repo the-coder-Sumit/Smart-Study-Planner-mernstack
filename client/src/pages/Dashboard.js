@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import API_URL from '../config';
@@ -22,8 +22,7 @@ function Dashboard() {
     } else {
       fetchDashboardData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
+  }, [navigate]);
 
   const fetchDashboardData = async () => {
     try {

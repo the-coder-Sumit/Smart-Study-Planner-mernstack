@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -20,13 +20,11 @@ function AIAssistant() {
 
   useEffect(() => {
     if (!token) navigate('/');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
+  }, [navigate, token]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
+  }, [messages]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -21,15 +21,14 @@ function Analytics() {
     todaySessions: 0,
     todayMinutes: 0,
   });
-  const [, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const token = sessionStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);

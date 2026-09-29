@@ -27,8 +27,7 @@ function QuizViewer() {
     if (!token) navigate('/');
     fetchQuiz();
     // eslint-disable-next-line
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
+  }, [noteId]);
 
   const fetchQuiz = async () => {
     setLoading(true);
