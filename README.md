@@ -46,7 +46,7 @@ Open a terminal and run:
 ```bash
 cd server
 npm install
-npm start
+node index.js
 ```
 *The server will start running on http://localhost:5000*
 
