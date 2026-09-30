@@ -13,6 +13,7 @@ function Pomodoro() {
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
   const [todayStats, setTodayStats] = useState({ todaySessions: 0, todayMinutes: 0 });
+  const [isFocusLocked, setIsFocusLocked] = useState(false);
   const intervalRef = useRef(null);
   const distractionsRef = useRef(0); // track distractions for current session
 
