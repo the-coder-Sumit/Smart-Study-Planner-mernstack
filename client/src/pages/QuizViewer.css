@@ -179,8 +179,18 @@
 
 .mcq-option:hover { background: rgba(255,255,255,0.1); }
 .mcq-option.selected { border-color: #3b82f6; background: rgba(59, 130, 246, 0.2); }
-.mcq-option.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
-.mcq-option.incorrect { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+.mcq-option.correct { 
+  border-color: #10b981 !important; 
+  background: #10b981 !important; 
+  color: #fff !important; 
+  font-weight: bold;
+}
+.mcq-option.incorrect { 
+  border-color: #ef4444 !important; 
+  background: #ef4444 !important; 
+  color: #fff !important; 
+  font-weight: bold;
+}
 
 .submit-quiz-btn {
   width: 100%;
