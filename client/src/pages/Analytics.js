@@ -249,8 +249,10 @@ function Analytics() {
                 <thead>
                   <tr style={{ borderBottom: '2px solid #4a3f75', textAlign: 'left', color: '#ffb86c' }}>
                     <th style={{ padding: '12px 10px' }}>Date</th>
+                    <th style={{ padding: '12px 10px' }}>Subject</th>
                     <th style={{ padding: '12px 10px' }}>Chapter / PDF</th>
                     <th style={{ padding: '12px 10px' }}>Score</th>
+                    <th style={{ padding: '12px 10px' }}>Percentage</th>
                     <th style={{ padding: '12px 10px' }}>Result</th>
                   </tr>
                 </thead>
@@ -265,8 +267,10 @@ function Analytics() {
                     return (
                       <tr key={i} style={{ borderBottom: '1px solid #3e3565', color: '#fff' }}>
                         <td style={{ padding: '12px 10px' }}>{new Date(score.date).toLocaleDateString()}</td>
+                        <td style={{ padding: '12px 10px', color: '#93c5fd' }}>{score.subjectName === 'Chapter/Unit' ? 'General' : score.subjectName}</td>
                         <td style={{ padding: '12px 10px' }}>{score.noteTitle}</td>
-                        <td style={{ padding: '12px 10px', color: color, fontWeight: 'bold' }}>{score.score} / {score.total} ({percentage.toFixed(0)}%)</td>
+                        <td style={{ padding: '12px 10px', fontWeight: 'bold' }}>{score.score} / {score.total}</td>
+                        <td style={{ padding: '12px 10px', color: color, fontWeight: 'bold' }}>{percentage.toFixed(0)}%</td>
                         <td style={{ padding: '12px 10px' }}>{emoji}</td>
                       </tr>
                     );

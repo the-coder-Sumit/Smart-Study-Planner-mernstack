@@ -13,12 +13,24 @@ const QuizScore = require('../models/QuizScore');
 // POST /api/quizzes/score - Save a quiz score
 router.post('/score', auth, async (req, res) => {
   try {
-    const { noteId, noteTitle, subjectName, score, total } = req.body;
+    const { noteId, noteTitle, score, total } = req.body;
+    
+    let actualSubjectName = 'General';
+    try {
+      const Note = require('../models/Note');
+      const note = await Note.findById(noteId).populate('subjectId');
+      if (note && note.subjectId && note.subjectId.name) {
+        actualSubjectName = note.subjectId.name;
+      }
+    } catch(e) {
+      console.log('Error fetching subject', e);
+    }
+
     const newScore = new QuizScore({
       userId: req.userId,
       noteId,
       noteTitle,
-      subjectName,
+      subjectName: actualSubjectName,
       score,
       total
     });
