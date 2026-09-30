@@ -7,6 +7,7 @@ import './Settings.css';
 function Settings() {
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+  const [viewImage, setViewImage] = useState(false);
   const [name, setName] = useState(user.name || '');
   const [email, setEmail] = useState(user.email || '');
   const [workTime, setWorkTime] = useState(parseInt(localStorage.getItem('workTime')) || 25);
@@ -133,7 +134,7 @@ function Settings() {
             <label>Profile Picture</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               {JSON.parse(sessionStorage.getItem('user'))?.profilePicture ? (
-                <img src={JSON.parse(sessionStorage.getItem('user')).profilePicture} alt="Profile" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={JSON.parse(sessionStorage.getItem('user')).profilePicture} alt="Profile" onClick={() => setViewImage(true)} style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }} />
               ) : (
                 <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: '#4a3f75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '30px', fontWeight: 'bold' }}>
                   {JSON.parse(sessionStorage.getItem('user'))?.name?.charAt(0).toUpperCase()}
@@ -235,6 +236,24 @@ function Settings() {
           </div>
 
       </div>
+    
+      {viewImage && (
+        <div 
+          onClick={() => setViewImage(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img 
+            src={JSON.parse(sessionStorage.getItem('user'))?.profilePicture} 
+            alt="Profile View" 
+            style={{ maxWidth: '90%', maxHeight: '90%', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.3)' }} 
+          />
+        </div>
+      )}
+        
     </div>
   );
 }

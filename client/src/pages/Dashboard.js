@@ -6,6 +6,7 @@ import './Dashboard.css';
 
 function Dashboard() {
   const [user, setUser] = useState(null);
+  const [viewImage, setViewImage] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [sessionStats, setSessionStats] = useState({ todaySessions: 0, todayMinutes: 0 });
   const [isEditingGoal, setIsEditingGoal] = useState(false);
@@ -90,7 +91,7 @@ function Dashboard() {
       <div className="main-content">
         <div className="header" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           {user?.profilePicture ? (
-            <img src={user.profilePicture} alt="Profile" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+            <img src={user.profilePicture} alt="Profile" onClick={() => setViewImage(true)} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }} />
           ) : (
             <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#4a3f75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold' }}>
               {user?.name?.charAt(0).toUpperCase()}
@@ -170,6 +171,24 @@ function Dashboard() {
           )}
         </div>
       </div>
+    
+      {viewImage && (
+        <div 
+          onClick={() => setViewImage(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img 
+            src={JSON.parse(sessionStorage.getItem('user'))?.profilePicture} 
+            alt="Profile View" 
+            style={{ maxWidth: '90%', maxHeight: '90%', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.3)' }} 
+          />
+        </div>
+      )}
+        
     </div>
   );
 }
