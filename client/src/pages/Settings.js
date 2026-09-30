@@ -46,7 +46,7 @@ function Settings() {
         alert("Profile picture updated successfully!");
         window.location.reload();
       } catch (err) {
-        alert("Failed to update profile picture.");
+        alert("Failed to update profile picture: " + (err.response?.data?.message || err.message)); console.log(err);
       } finally {
         setUploading(false);
       }
