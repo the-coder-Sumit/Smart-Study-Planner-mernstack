@@ -34,7 +34,7 @@ function Analytics() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [tasksRes, subjectsRes, weeklyRes, statsRes] = await Promise.all([
+      const [tasksRes, subjectsRes, weeklyRes, statsRes, scoresRes] = await Promise.all([
         axios.get(`${API_URL}/api/tasks`, { headers }),
         axios.get(`${API_URL}/api/subjects`, { headers }),
         axios.get(`${API_URL}/api/sessions/weekly`, { headers }),
@@ -45,6 +45,7 @@ function Analytics() {
       setSubjects(subjectsRes.data);
       setWeeklyData(weeklyRes.data);
       setSessionStats(statsRes.data);
+      setQuizScores(scoresRes.data);
     } catch (err) {
       console.log(err);
     }
