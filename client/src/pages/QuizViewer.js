@@ -150,8 +150,10 @@ function QuizViewer() {
                             className={className}
                             onClick={() => handleOptionSelect(qIndex, opt)}
                           >
-                            {opt}
-                          </button>
+                              {opt}
+                              {showResults && opt === q.correctAnswer && <span style={{ float: "right" }}>✅</span>}
+                              {showResults && answers[qIndex] === opt && opt !== q.correctAnswer && <span style={{ float: "right" }}>❌</span>}
+                            </button>
                         );
                       })}
                     </div>
