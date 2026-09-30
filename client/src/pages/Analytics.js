@@ -22,6 +22,7 @@ function Analytics() {
     todayMinutes: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [quizScores, setQuizScores] = useState([]);
 
   const token = sessionStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
@@ -38,6 +39,7 @@ function Analytics() {
         axios.get(`${API_URL}/api/subjects`, { headers }),
         axios.get(`${API_URL}/api/sessions/weekly`, { headers }),
         axios.get(`${API_URL}/api/sessions/stats`, { headers }),
+        axios.get(`${API_URL}/api/quizzes/scores`, { headers }).catch(e => ({data: []})),
       ]);
       setTasks(tasksRes.data);
       setSubjects(subjectsRes.data);
@@ -236,7 +238,46 @@ function Analytics() {
           )}
         </div>
         </div>
-      </div>
+      
+        {/* Quiz History Section */}
+        <div className="chart-card" style={{ gridColumn: '1 / -1', marginTop: '20px' }}>
+          <h3>📜 Quiz Performance History</h3>
+          {quizScores.length > 0 ? (
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '15px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #4a3f75', textAlign: 'left', color: '#ffb86c' }}>
+                    <th style={{ padding: '12px 10px' }}>Date</th>
+                    <th style={{ padding: '12px 10px' }}>Chapter / PDF</th>
+                    <th style={{ padding: '12px 10px' }}>Score</th>
+                    <th style={{ padding: '12px 10px' }}>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {quizScores.map((score, i) => {
+                    const percentage = (score.score / score.total) * 100;
+                    let color = '#ef4444'; // Red
+                    let emoji = '❌ Needs Work';
+                    if (percentage >= 80) { color = '#10b981'; emoji = '🏆 Excellent'; }
+                    else if (percentage >= 50) { color = '#f59e0b'; emoji = '👍 Good'; }
+                    
+                    return (
+                      <tr key={i} style={{ borderBottom: '1px solid #3e3565', color: '#fff' }}>
+                        <td style={{ padding: '12px 10px' }}>{new Date(score.date).toLocaleDateString()}</td>
+                        <td style={{ padding: '12px 10px' }}>{score.noteTitle}</td>
+                        <td style={{ padding: '12px 10px', color: color, fontWeight: 'bold' }}>{score.score} / {score.total} ({percentage.toFixed(0)}%)</td>
+                        <td style={{ padding: '12px 10px' }}>{emoji}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p style={{ color: '#8b80b7', marginTop: '15px' }}>No quizzes taken yet. Generate an AI quiz from your notes to see your history!</p>
+          )}
+        </div>
+</div>
     </div>
   );
 }

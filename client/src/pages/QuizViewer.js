@@ -69,8 +69,40 @@ function QuizViewer() {
     setAnswers({ ...answers, [qIndex]: option });
   };
 
-  const submitQuiz = () => {
+  const submitQuiz = async () => {
     setShowResults(true);
+    let score = 0;
+    Object.keys(answers).forEach(k => {
+      const opt = answers[k];
+      const q = quiz.mcqs[k];
+      if (!opt || !q.correctAnswer) return;
+      const correctStr = String(q.correctAnswer).trim().toLowerCase();
+      const optStr = String(opt).trim().toLowerCase();
+      if (optStr === correctStr) {
+        score++; return;
+      }
+      const oIndex = q.options.findIndex(o => o === opt);
+      if (['a','b','c','d'].includes(correctStr)) {
+          const indexMap = {'a': 0, 'b': 1, 'c': 2, 'd': 3};
+          if (oIndex === indexMap[correctStr]) score++;
+      } else if (correctStr.startsWith('option ') && correctStr.length > 7) {
+          const char = correctStr.charAt(7);
+          const indexMap = {'a': 0, 'b': 1, 'c': 2, 'd': 3, '1': 0, '2': 1, '3': 2, '4': 3};
+          if (oIndex === indexMap[char]) score++;
+      }
+    });
+
+    try {
+      await axios.post(`${API_URL}/api/quizzes/score`, {
+        noteId: quiz.noteId,
+        noteTitle: quiz.title,
+        subjectName: 'Chapter/Unit', // Placeholder if we don't have subject
+        score,
+        total: quiz.mcqs.length
+      }, { headers });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (loading) return <div className="quiz-page"><div className="quiz-main"><h2>Loading...</h2></div></div>;

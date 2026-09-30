@@ -8,6 +8,38 @@ const { GoogleAIFileManager } = require('@google/generative-ai/server');
 const Note = require('../models/Note');
 const Quiz = require('../models/Quiz');
 
+const QuizScore = require('../models/QuizScore');
+
+// POST /api/quizzes/score - Save a quiz score
+router.post('/score', auth, async (req, res) => {
+  try {
+    const { noteId, noteTitle, subjectName, score, total } = req.body;
+    const newScore = new QuizScore({
+      userId: req.userId,
+      noteId,
+      noteTitle,
+      subjectName,
+      score,
+      total
+    });
+    await newScore.save();
+    res.json(newScore);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// GET /api/quizzes/scores - Get all quiz scores for a user
+router.get('/scores', auth, async (req, res) => {
+  try {
+    const scores = await QuizScore.find({ userId: req.userId }).sort({ date: -1 });
+    res.json(scores);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 
 // GET /api/quizzes/:noteId - Fetch existing quiz for a note
