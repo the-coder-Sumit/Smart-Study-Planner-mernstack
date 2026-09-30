@@ -199,3 +199,24 @@ body.light .tab-btn.active {
   background: #3b82f6 !important;
   color: white !important;
 }
+/* Focus Mode Lock Screen */
+body.focus-locked .sidebar {
+  display: none !important;
+}
+body.focus-locked .main-content {
+  margin-left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #0d0914 !important;
+}
+body.focus-locked .pomodoro-container {
+  transform: scale(1.2);
+  margin: 0;
+  box-shadow: 0 0 50px rgba(111, 76, 255, 0.5);
+}
+body.focus-locked .dashboard, body.focus-locked .header {
+  display: none !important;
+}

@@ -29,6 +29,38 @@ function Pomodoro() {
     fetchTodayStats();
   }, []);
 
+  
+  const toggleFocusLock = () => {
+    if (!isFocusLocked) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      }
+      document.body.classList.add('focus-locked');
+      setIsFocusLocked(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(err => console.log(err));
+      }
+      document.body.classList.remove('focus-locked');
+      setIsFocusLocked(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && isFocusLocked) {
+        // User switched tabs while in Focus Lock!
+        playAlertSound();
+        alert("🚨 STRICT FOCUS MODE ACTIVE: You switched tabs! Stay focused on your study screen!");
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.body.classList.remove('focus-locked'); // cleanup
+    };
+  }, [isFocusLocked]);
+
   const fetchSubjects = async () => {
     try {
       const res = await axios.get(`${API_URL}/api/subjects`, { headers });
