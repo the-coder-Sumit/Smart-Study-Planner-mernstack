@@ -137,11 +137,38 @@ function QuizViewer() {
                     <div className="mcq-options">
                       {q.options.map((opt, oIndex) => {
                         let className = "mcq-option";
-                        if (answers[qIndex] === opt) className += " selected";
+                        const isSelected = answers[qIndex] === opt;
+                        if (isSelected) className += " selected";
                         
+                        let isCorrect = false;
+                        if (q.correctAnswer !== undefined && q.correctAnswer !== null) {
+                            const correctStr = String(q.correctAnswer).trim().toLowerCase();
+                            const optStr = String(opt).trim().toLowerCase();
+                            
+                            // Check exact string match
+                            if (optStr === correctStr) {
+                                isCorrect = true;
+                            } 
+                            // Check if LLM returned "A", "B", "C", "D"
+                            else if (['a','b','c','d'].includes(correctStr)) {
+                                const indexMap = {'a': 0, 'b': 1, 'c': 2, 'd': 3};
+                                if (oIndex === indexMap[correctStr]) {
+                                    isCorrect = true;
+                                }
+                            }
+                            // Check if LLM returned "Option 1", "Option A", etc
+                            else if (correctStr.startsWith('option ') && correctStr.length > 7) {
+                                const char = correctStr.charAt(7);
+                                const indexMap = {'a': 0, 'b': 1, 'c': 2, 'd': 3, '1': 0, '2': 1, '3': 2, '4': 3};
+                                if (oIndex === indexMap[char]) {
+                                    isCorrect = true;
+                                }
+                            }
+                        }
+
                         if (showResults) {
-                          if (opt === q.correctAnswer) className += " correct";
-                          else if (answers[qIndex] === opt) className += " incorrect";
+                          if (isCorrect) className += " correct";
+                          else if (isSelected) className += " incorrect";
                         }
 
                         return (
@@ -151,8 +178,8 @@ function QuizViewer() {
                             onClick={() => handleOptionSelect(qIndex, opt)}
                           >
                               {opt}
-                              {showResults && opt === q.correctAnswer && <span style={{ float: "right" }}>✅</span>}
-                              {showResults && answers[qIndex] === opt && opt !== q.correctAnswer && <span style={{ float: "right" }}>❌</span>}
+                              {showResults && isCorrect && <span style={{ float: "right" }}>✅</span>}
+                              {showResults && isSelected && !isCorrect && <span style={{ float: "right" }}>❌</span>}
                             </button>
                         );
                       })}
@@ -166,7 +193,26 @@ function QuizViewer() {
                   </button>
                 ) : (
                   <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <h2>Your Score: {Object.keys(answers).filter(k => answers[k] === quiz.mcqs[k].correctAnswer).length} / {quiz.mcqs.length}</h2>
+                    <h2>Your Score: {Object.keys(answers).filter(k => {
+                        const opt = answers[k];
+                        const q = quiz.mcqs[k];
+                        if (!opt || !q.correctAnswer) return false;
+                        const correctStr = String(q.correctAnswer).trim().toLowerCase();
+                        const optStr = String(opt).trim().toLowerCase();
+                        if (optStr === correctStr) return true;
+                        
+                        const oIndex = q.options.findIndex(o => o === opt);
+                        if (['a','b','c','d'].includes(correctStr)) {
+                            const indexMap = {'a': 0, 'b': 1, 'c': 2, 'd': 3};
+                            return oIndex === indexMap[correctStr];
+                        }
+                        if (correctStr.startsWith('option ') && correctStr.length > 7) {
+                            const char = correctStr.charAt(7);
+                            const indexMap = {'a': 0, 'b': 1, 'c': 2, 'd': 3, '1': 0, '2': 1, '3': 2, '4': 3};
+                            return oIndex === indexMap[char];
+                        }
+                        return false;
+                      }).length} / {quiz.mcqs.length}</h2>
                     <button className="tab-btn" onClick={() => {setShowResults(false); setAnswers({});}}>Restart Quiz</button>
                   </div>
                 )}
