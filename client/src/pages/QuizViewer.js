@@ -159,7 +159,7 @@ function QuizViewer() {
                 ))}
 
                 {!showResults ? (
-                  <button className="submit-quiz-btn" onClick={submitQuiz} disabled={Object.keys(answers).length < quiz.mcqs.length}>
+                  <button className="submit-quiz-btn" style={{ cursor: "pointer" }} onClick={submitQuiz}>
                     Submit Quiz
                   </button>
                 ) : (
