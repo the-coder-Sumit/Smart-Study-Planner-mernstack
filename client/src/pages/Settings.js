@@ -23,6 +23,24 @@ function Settings() {
   const headers = { Authorization: 'Bearer ' + sessionStorage.getItem('token') };
 
   
+  
+  const handleProfilePicDelete = async () => {
+    if (!window.confirm("Are you sure you want to remove your profile picture?")) return;
+    try {
+      setUploading(true);
+      await axios.delete(`${API_URL}/api/users/profile-picture`, { headers });
+      let currentUser = JSON.parse(sessionStorage.getItem('user'));
+      currentUser.profilePicture = '';
+      sessionStorage.setItem('user', JSON.stringify(currentUser));
+      alert("Profile picture removed successfully!");
+      window.location.reload();
+    } catch (err) {
+      alert("Failed to remove profile picture: " + (err.response?.data?.message || err.message));
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleProfilePicUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -142,6 +160,17 @@ function Settings() {
               )}
               <input type="file" accept="image/*" onChange={handleProfilePicUpload} disabled={uploading} style={{ padding: '10px' }} />
               {uploading && <span>Uploading...</span>}
+              {JSON.parse(sessionStorage.getItem('user'))?.profilePicture && (
+                <button 
+                  type="button" 
+                  onClick={handleProfilePicDelete} 
+                  disabled={uploading}
+                  style={{ padding: '8px 12px', backgroundColor: '#e74c3c', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', marginLeft: '10px' }}
+                >
+                  🗑️ Remove
+                </button>
+              )}
+
             </div>
           </div>
 

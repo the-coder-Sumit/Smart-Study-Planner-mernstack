@@ -88,5 +88,22 @@ router.put('/profile-picture', auth, async (req, res) => {
   }
 });
 
+
+// Delete Profile Picture
+router.delete('/profile-picture', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    
+    user.profilePicture = '';
+    await user.save();
+    
+    res.json({ message: 'Profile picture removed successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error removing profile picture: ' + error.message });
+  }
+});
+
 module.exports = router;
+
 
