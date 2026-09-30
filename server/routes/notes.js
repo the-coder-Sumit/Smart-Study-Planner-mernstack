@@ -95,4 +95,15 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+
+// GET /api/notes - Get ALL notes for user (used for global search)
+router.get('/', auth, async (req, res) => {
+  try {
+    const notes = await Note.find({ userId: req.userId }).sort({ createdAt: -1 });
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
