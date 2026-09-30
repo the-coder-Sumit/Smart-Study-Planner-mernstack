@@ -76,7 +76,7 @@ router.get('/leaderboard', auth, async (req, res) => {
 router.put('/profile-picture', auth, async (req, res) => {
   try {
     const { profilePicture } = req.body;
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
     
     user.profilePicture = profilePicture;
