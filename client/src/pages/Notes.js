@@ -83,6 +83,7 @@ function Notes() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       document.body.classList.remove('focus-locked');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studyModeNote]);
 
   const fetchSubjects = async () => {
