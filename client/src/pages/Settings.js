@@ -19,6 +19,38 @@ function Settings() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [pwdMsg, setPwdMsg] = useState('');
 
+  
+  const handleProfilePicUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert("File is too large. Please upload an image smaller than 2MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      try {
+        setUploading(true);
+        const res = await axios.put(`${API_URL}/api/users/profile-picture`, 
+          { profilePicture: reader.result }, 
+          { headers }
+        );
+        let currentUser = JSON.parse(sessionStorage.getItem('user'));
+        currentUser.profilePicture = res.data.profilePicture;
+        sessionStorage.setItem('user', JSON.stringify(currentUser));
+        alert("Profile picture updated successfully!");
+        window.location.reload();
+      } catch (err) {
+        alert("Failed to update profile picture.");
+      } finally {
+        setUploading(false);
+      }
+    };
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     // Save Pomodoro settings to localStorage
@@ -94,6 +126,22 @@ function Settings() {
         {saved && <div className="success-msg">✅ Settings saved successfully!</div>}
 
         <form onSubmit={handleSave}>
+
+          <div className="form-group">
+            <label>Profile Picture</label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              {JSON.parse(sessionStorage.getItem('user'))?.profilePicture ? (
+                <img src={JSON.parse(sessionStorage.getItem('user')).profilePicture} alt="Profile" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+              ) : (
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: '#4a3f75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '30px', fontWeight: 'bold' }}>
+                  {JSON.parse(sessionStorage.getItem('user'))?.name?.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <input type="file" accept="image/*" onChange={handleProfilePicUpload} disabled={uploading} style={{ padding: '10px' }} />
+              {uploading && <span>Uploading...</span>}
+            </div>
+          </div>
+
 
           {/* Profile Section */}
           <div className="settings-card">

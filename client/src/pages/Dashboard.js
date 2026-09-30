@@ -88,9 +88,18 @@ function Dashboard() {
 
       {/* Main Content */}
       <div className="main-content">
-        <div className="header">
-          <h1>Welcome back, {user?.name}! 👋</h1>
-          <p>Let's make today productive!</p>
+        <div className="header" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          {user?.profilePicture ? (
+            <img src={user.profilePicture} alt="Profile" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+          ) : (
+            <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#4a3f75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+          )}
+          <div>
+            <h1>Welcome back, {user?.name}! 👋</h1>
+            <p>Let's make today productive!</p>
+          </div>
         </div>
 
         {/* Goal Progress Bar */}

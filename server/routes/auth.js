@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '7d'
     });
 
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ token, user: { id: user._id, name: user.name, email: user.email, profilePicture: user.profilePicture } });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -164,7 +164,7 @@ router.post('/google', async (req, res) => {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
     const payload = ticket.getPayload();
-    const { name, email } = payload;
+    const { name, email, picture } = payload;
     
     // Check if user exists
     let user = await User.findOne({ email });
@@ -184,7 +184,7 @@ router.post('/google', async (req, res) => {
       expiresIn: '7d'
     });
     
-    res.json({ token: jwtToken, user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ token: jwtToken, user: { id: user._id, name: user.name, email: user.email, profilePicture: user.profilePicture } });
   } catch (error) {
     console.error("Google Auth Error:", error);
     res.status(500).json({ message: 'Server error during Google Authentication', error });

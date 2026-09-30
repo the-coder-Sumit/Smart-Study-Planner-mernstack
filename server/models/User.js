@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
   totalStudyMinutes: {
     type: Number,
     default: 0
+  },
+  profilePicture: {
+    type: String,
+    default: ""
   }
 }, { timestamps: true });
 
