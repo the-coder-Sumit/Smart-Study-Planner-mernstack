@@ -257,6 +257,15 @@ function Notes() {
                       >
                         ⬇️ Download
                       </a>
+
+                        <button 
+                          onClick={() => startStudyMode(note)} 
+                          className="download-btn" 
+                          style={{ background: '#10b981', color: '#fff', border: 'none', cursor: 'pointer', padding: '8px 12px', borderRadius: '5px' }}
+                        >
+                          📖 Study Mode
+                        </button>
+
                       <Link to={`/quiz/${note._id}`} className="download-btn" style={{ background: '#8b5cf6' }}>
                         🧠 AI Quiz
                       </Link>
