@@ -59,6 +59,7 @@ function Pomodoro() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       document.body.classList.remove('focus-locked'); // cleanup
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocusLocked]);
 
   const fetchSubjects = async () => {
