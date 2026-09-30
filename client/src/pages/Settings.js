@@ -18,6 +18,8 @@ function Settings() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [pwdMsg, setPwdMsg] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const headers = { Authorization: 'Bearer ' + sessionStorage.getItem('token') };
 
   
   const handleProfilePicUpload = async (e) => {
