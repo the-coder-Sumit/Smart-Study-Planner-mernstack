@@ -84,7 +84,7 @@ router.put('/profile-picture', auth, async (req, res) => {
     
     res.json({ message: 'Profile picture updated successfully', profilePicture: user.profilePicture });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating profile picture', error });
+    res.status(500).json({ message: 'Error updating profile picture: ' + error.message, error });
   }
 });
 
