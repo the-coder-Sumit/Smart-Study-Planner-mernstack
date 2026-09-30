@@ -273,10 +273,24 @@ function Pomodoro() {
           </div>
         </div>
 
+        
         {/* Distraction Button */}
         <button className="distraction-btn" onClick={handleDistraction}>
-          😵 I got distracted!
+          I got distracted!
         </button>
+
+        {/* Strict Focus Lock Button */}
+        <button 
+          onClick={toggleFocusLock} 
+          style={{ 
+            marginTop: '15px', padding: '10px 20px', width: '100%', 
+            backgroundColor: isFocusLocked ? '#e74c3c' : '#6f4cff', 
+            color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' 
+          }}
+        >
+          {isFocusLocked ? '🔓 Exit Focus Lock' : '🔒 Strict Focus Lock'}
+        </button>
+
       </div>
     </div>
   );
