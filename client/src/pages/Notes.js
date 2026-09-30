@@ -8,6 +8,7 @@ function Notes() {
   const [subjects, setSubjects] = useState([]);
   const [notes, setNotes] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [studyModeNote, setStudyModeNote] = useState(null);
   
   // Upload form state
   const [title, setTitle] = useState('');
@@ -33,6 +34,56 @@ function Notes() {
       setNotes([]);
     }
   }, [selectedSubject]);
+
+  
+  const playAlertSound = () => {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      oscillator.type = 'sawtooth';
+      oscillator.frequency.setValueAtTime(400, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.5);
+      gainNode.gain.setValueAtTime(1, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 1);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const startStudyMode = (note) => {
+    setStudyModeNote(note);
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(err => console.log(err));
+    }
+    document.body.classList.add('focus-locked');
+  };
+
+  const stopStudyMode = () => {
+    setStudyModeNote(null);
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(err => console.log(err));
+    }
+    document.body.classList.remove('focus-locked');
+  };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && studyModeNote) {
+        playAlertSound();
+        alert("🚨 STRICT STUDY MODE ACTIVE: You switched tabs! Return to your notes immediately!");
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.body.classList.remove('focus-locked');
+    };
+  }, [studyModeNote]);
 
   const fetchSubjects = async () => {
     try {
@@ -217,7 +268,33 @@ function Notes() {
           </div>
 
         </div>
-      </div>
+      
+      {studyModeNote && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          backgroundColor: '#000', zIndex: 99999, display: 'flex', flexDirection: 'column'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px 30px', backgroundColor: '#1a1a2e', alignItems: 'center' }}>
+            <div style={{ color: '#fff', display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <h2 style={{ margin: 0, color: '#10b981' }}>🔒 Strict Study Mode</h2>
+              <span style={{ fontSize: '18px' }}>{studyModeNote.title}</span>
+            </div>
+            <button 
+              onClick={stopStudyMode}
+              style={{ backgroundColor: '#e74c3c', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
+            >
+              🚪 Exit Study Mode
+            </button>
+          </div>
+          <iframe 
+            src={`${API_URL}/uploads/${studyModeNote.filePath}`} 
+            style={{ width: '100%', flex: 1, border: 'none', backgroundColor: '#fff' }}
+            title="Study Document"
+          />
+        </div>
+      )}
+
+    </div>
     </div>
   );
 }
